@@ -1,53 +1,3 @@
-/*
- function mostrarTablaConImagenes(data) 
-{
-    const productos = JSON.parse(data);
-    const table = document.getElementById('producttable');
-
-    for (let i = 0; i < productos.length; i++) {
-        const row = table.insertRow();
-        const imagenCell = row.insertCell(0);
-        const codigoCell = row.insertCell(1);
-        const nombreCell = row.insertCell(2);
-        const descripcionCell = row.insertCell(3);
-        const precioCell = row.insertCell(4);
-
-        imagenCell.innerHTML = '<img src="${productos[i].imagen}" alt="Imagen del producto">';
-        codigoCell.innerHTML = productos[i].código;
-        nombreCell.innerHTML = productos[i].nombre;
-        descripcionCell.innerHTML = productos[i].descripción;
-        precioCell.innerHTML = productos[i].precio;
-    }
-
-        document.body.appendChild(table);
-    };
-    
-
-function agregarNuevoP(codigo, nombre, descripcion, precio, imagen) {
-
-            const imagen = document.getElementById('imagen').value;
-            const codigo = document.getElementById('codigo').value;
-            const nombre = document.getElementById('nombre').value;
-            const descripcion = document.getElementById('descripcion').value;
-            const precio = document.getElementById('precio').value;
-            const nuevoProducto = {
-            codigo: codigo,
-            nombre: nombre,
-            descripcion: descripcion,
-            precio: parseFloat(precio),
-            igm: imagen
-    };
-
-    mostrarTablaConImagenes(nuevoProducto);
-         
-}
-
-function btnAdd()
-    {
-    const btnAddNew = document.getElementById('add');
-    btnAddNew.addEventListener("click", agregarNuevoP)
-
-} */
 
 // crud youtube
 
@@ -82,6 +32,7 @@ function validateform(){
         alert("precio debe ser positivo")
     }
 }
+
 function showdatatable(){
 
     var pList;
@@ -135,11 +86,11 @@ function adddata(){
             descripcion: descripcion,
             precio: parseFloat(precio),
             igm: imagen
-        })
+        });
 
         localStorage.setItem("product", JSON.stringify(pList));
 
-/*         fecht('/src/data/product.json')
+/*       fecht('/src/data/product.json')
         .then(response => response.json())
         .then(data => {
             //data.push(pList);
@@ -161,3 +112,62 @@ function adddata(){
     }
 };
 
+
+function deletedata(index){
+    var pList;
+        if (localStorage.getItem("product")==null){
+            pList=[];
+    
+        }
+        else {
+            pList =JSON.parse(localStorage.getItem("product"))
+        }
+
+    pList.splice(index, 1);
+    localStorage.setItem("product", JSON.stringify(product));
+    showdatatable();
+}
+
+function updatedata(){
+    document.getElementById("add").style.display="none";
+    document.getElementById("update").style.display="block";
+
+    var pList;
+        if (localStorage.getItem("product")==null){
+            pList=[];
+    
+        }
+        else {
+            pList =JSON.parse(localStorage.getItem("product"))
+        }
+
+        document.getElementById('imagen').value = pList[index].imagen;
+        document.getElementById('codigo').value = pList[index].codigo;
+        document.getElementById('nombre').value = pList[index].nombre;
+        document.getElementById('descripcion').value = pList[index].descripcion;
+        document.getElementById('precio').value = pList[index].precio; 
+
+        document.querySelector("#update").onclick =function(){
+            if(validateform()== true){
+                pList[index].imagen = document.getElementById("imagen").value;
+                pList[index].codigo = document.getElementById("codigo").value;
+                pList[index].name = document.getElementById("imagen").value;
+                pList[index].descripcion = document.getElementById("descripcion").value;
+                pList[index].precio = document.getElementById("precio").value;
+                
+                localStorage.setItem("product", JSON.stringify(product));
+                showdatatable();
+
+                document.getElementById('imagen').value = "";
+                document.getElementById('codigo').value = "";
+                document.getElementById('nombre').value = "";
+                document.getElementById('descripcion').value = "";
+                document.getElementById('precio').value = "";
+
+                document.getElementById("add").style.display="block";
+                document.getElementById("update").style.display="none";
+            
+            }
+        }
+
+}
