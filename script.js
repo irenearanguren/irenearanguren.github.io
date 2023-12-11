@@ -123,7 +123,7 @@ function deletedata(index){
             pList =JSON.parse(localStorage.getItem("product"))
         }
 
-    pList.splice(index, 1);
+    pList.splice(index);
     localStorage.setItem("product", JSON.stringify(product));
     showdatatable();
 }
